@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Class Schedule</title>
+    <meta name="theme-color" content="#1D9E75">
+    <meta name="description" content="Offline-capable class schedule tracker">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS support -->
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/192/2693/2693507.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    
+    <style>
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f4f4f5;
+            --color-background-tertiary: #e4e4e7;
+            --color-text-primary: #18181b;
+            --color-text-secondary: #71717a;
+            --color-text-tertiary: #a1a1aa;
+            --color-border-primary: #d4d4d8;
+            --color-border-secondary: #e4e4e7;
+            --color-border-tertiary: #f4f4f5;
+            --border-radius-md: 6px;
+            --border-radius-lg: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { 
+            font-family: var(--font-sans); 
+            background-color: var(--color-background-secondary);
+            color: var(--color-text-primary);
+            line-height: 1.5;
+        }
+        .app { 
+            padding: 1rem; 
+            max-width: 480px; 
+            margin: 0 auto; 
+            min-height: 100vh;
+            background-color: var(--color-background-primary);
+        }
+        .header { margin-bottom: 1.5rem; }
+        .date-badge { font-size: 13px; color: var(--color-text-secondary); font-weight: 400; margin-top: 4px; }
+        .day-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .day-tabs::-webkit-scrollbar { display: none; }
+        .day-tab { 
+            flex-shrink: 0; 
+            padding: 8px 16px; 
+            border-radius: var(--border-radius-md); 
+            border: 1px solid var(--color-border-secondary); 
+            background: var(--color-background-primary); 
+            font-size: 14px; 
+            color: var(--color-text-secondary); 
+            cursor: pointer; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+        .day-tab.active { 
+            background: var(--color-text-primary); 
+            color: white; 
+            font-weight: 500; 
+            border-color: var(--color-text-primary); 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .class-card { 
+            background: var(--color-background-primary); 
+            border: 1px solid var(--color-border-tertiary); 
+            border-radius: var(--border-radius-lg); 
+            padding: 1.25rem; 
+            margin-bottom: 12px; 
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.1s;
+        }
+        .class-card:active { transform: scale(0.98); }
+        .class-card.ongoing { border-left: 4px solid #1D9E75; }
+        .class-card.upcoming { border-left: 4px solid #378ADD; }
+        .class-card.done { border-left: 4px solid var(--color-border-secondary); opacity: 0.65; }
+        .class-card.lab { border-left: 4px solid #BA7517; }
+        
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+        .subject-name { font-size: 16px; font-weight: 600; color: var(--color-text-primary); line-height: 1.3; }
+        .status-badge { flex-shrink: 0; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; }
+        
+        .badge-ongoing { background: #E1F5EE; color: #0F6E56; }
+        .badge-upcoming { background: #E6F1FB; color: #185FA5; }
+        .badge-done { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+        .badge-lab { background: #FAEEDA; color: #854F0B; }
+        
+        .card-meta { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+        .meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--color-text-secondary); }
+        .progress-bar { margin-top: 12px; background: var(--color-background-secondary); border-radius: 6px; height: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease-out; background: #1D9E75; }
+        .progress-fill.upcoming { background: #378ADD; }
+        .time-left { font-size: 12px; color: var(--color-text-tertiary); margin-top: 6px; font-weight: 500; }
+        .empty-state { text-align: center; padding: 3rem 1rem; color: var(--color-text-secondary); font-size: 15px; }
+        .section-title { font-size: 12px; font-weight: 700; color: var(--color-text-tertiary); letter-spacing: 0.06em; margin-bottom: 12px; text-transform: uppercase; margin-top: 1.5rem; }
+        .section-title:first-child { margin-top: 0; }
+        .clock { font-size: 14px; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+        h2 { font-size: 24px; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.02em; }
+        
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
+</head>
+<body>
+
+<div class="app">
+  <h1 class="sr-only">Class Schedule</h1>
+  <div class="header">
+    <h2 id="day-title">Today's Classes</h2>
+    <div class="clock" id="live-clock">--:--:--</div>
+    <div class="date-badge" id="date-badge"></div>
+  </div>
+  <nav class="day-tabs" id="day-tabs" aria-label="Day selection"></nav>
+  <main id="schedule-list"></main>
+</div>
+
+<script>
+// --- Schedule Data ---
+const schedule = [
+  { id:1, name:"Fundamentals of Computing", type:"lecture", days:["Sun","Mon"], start:"10:30", end:"12:00", room:"307" },
+  { id:2, name:"General Chemistry", type:"lecture", days:["Sun","Mon"], start:"09:00", end:"10:30", room:"205" },
+  { id:3, name:"Math-1 Calculus", type:"lecture", days:["Sun","Mon"], start:"12:00", end:"13:30", room:"306" },
+  { id:4, name:"Fundamentals of Computer Lab", type:"lab", days:["Sun"], start:"13:30", end:"15:30", room:"204" },
+  { id:5, name:"General Chemistry Lab", type:"lab", days:["Thu"], start:"11:00", end:"13:00", room:"117" },
+  { id:6, name:"Elementary English", type:"lecture", days:["Thu"], start:"09:00", end:"11:00", room:"LB 218" },
+];
+
+const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const fullDayNames = { Sun:"Sunday", Mon:"Monday", Tue:"Tuesday", Wed:"Wednesday", Thu:"Thursday", Fri:"Friday", Sat:"Saturday" };
+
+// --- Utility Functions ---
+function toMins(t) {
+  const [h,m] = t.split(":").map(Number);
+  return h*60+m;
+}
+
+function fmt12(t) {
+  let [h,m] = t.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+  return `${h}:${String(m).padStart(2,"0")} ${ampm}`;
+}
+
+function getStatus(cls, nowMins) {
+  const s = toMins(cls.start), e = toMins(cls.end);
+  if(nowMins >= s && nowMins < e) return "ongoing";
+  if(nowMins < s) return "upcoming";
+  return "done";
+}
+
+function getProgress(cls, nowMins) {
+  const s = toMins(cls.start), e = toMins(cls.end);
+  if(nowMins < s) return 0;
+  if(nowMins >= e) return 100;
+  return Math.round(((nowMins - s) / (e - s)) * 100);
+}
+
+function timeLeft(cls, nowMins) {
+  const s = toMins(cls.start), e = toMins(cls.end);
+  if(nowMins < s) {
+    const diff = s - nowMins;
+    if(diff < 60) return `Starts in ${diff} min`;
+    return `Starts in ${Math.floor(diff/60)}h ${diff%60}m`;
+  }
+  if(nowMins < e) {
+    const diff = e - nowMins;
+    if(diff < 60) return `${diff} min remaining`;
+    return `${Math.floor(diff/60)}h ${diff%60}m remaining`;
+  }
+  return "Completed";
+}
+
+let selectedDay = null;
+
+// --- Rendering Logic ---
+function render() {
+  const now = new Date();
+  const dayAbbr = dayNames[now.getDay()];
+  if(!selectedDay) selectedDay = dayAbbr;
+
+  const h = now.getHours(), mi = now.getMinutes(), s = now.getSeconds();
+  const ampm = h >= 12 ? "PM" : "AM";
+  const hh = h % 12 || 12;
+  document.getElementById("live-clock").textContent =
+    `${hh}:${String(mi).padStart(2,"0")}:${String(s).padStart(2,"0")} ${ampm}`;
+
+  document.getElementById("date-badge").textContent =
+    now.toLocaleDateString("en-US", {weekday:"long", year:"numeric", month:"long", day:"numeric"});
+
+  const activeDays = [...new Set(schedule.flatMap(c=>c.days))].sort((a,b)=>dayNames.indexOf(a)-dayNames.indexOf(b));
+
+  const tabsEl = document.getElementById("day-tabs");
+  tabsEl.innerHTML = activeDays.map(d => `
+    <button class="day-tab${d===selectedDay?" active":""}" onclick="selectDay('${d}')">
+      ${fullDayNames[d]}${d===dayAbbr?' <span style="font-size:10px;opacity:0.7">• today</span>':''}
+    </button>
+  `).join("");
+
+  const nowMins = h*60+mi;
+  const classes = schedule.filter(c=>c.days.includes(selectedDay));
+  const listEl = document.getElementById("schedule-list");
+
+  if(classes.length === 0) {
+    listEl.innerHTML = `<div class="empty-state"><i class="ti ti-calendar-off" style="font-size:48px;display:block;margin-bottom:12px;opacity:0.2" aria-hidden="true"></i>No classes scheduled for ${fullDayNames[selectedDay]}</div>`;
+    return;
+  }
+
+  const isToday = selectedDay === dayAbbr;
+  const sorted = [...classes].sort((a,b) => toMins(a.start) - toMins(b.start));
+
+  const ongoing = sorted.filter(c => isToday && getStatus(c,nowMins)==="ongoing");
+  const upcoming = sorted.filter(c => isToday && getStatus(c,nowMins)==="upcoming");
+  const done = sorted.filter(c => isToday && getStatus(c,nowMins)==="done");
+  const all = isToday ? null : sorted;
+
+  let html = "";
+
+  function cardHtml(cls, forcedStatus) {
+    const status = isToday ? getStatus(cls, nowMins) : (forcedStatus || "upcoming");
+    const prog = isToday ? getProgress(cls, nowMins) : 0;
+    const tl = isToday ? timeLeft(cls, nowMins) : `${fmt12(cls.start)} – ${fmt12(cls.end)}`;
+    const isLab = cls.type === "lab";
+    const cardClass = isLab && status==="ongoing" ? "ongoing" : isLab ? "lab" : status;
+    const badgeClass = isLab ? "badge-lab" : `badge-${status}`;
+    const badgeLabel = status==="ongoing"?"Now": status==="upcoming"?"Next":"Done";
+    const fillClass = status==="upcoming"?"upcoming":"";
+    
+    return `
+      <article class="class-card ${cardClass}">
+        <div class="card-top">
+          <h3 class="subject-name">${cls.name}</h3>
+          <span class="status-badge ${badgeClass}">${isLab?"Lab":badgeLabel}</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-item"><i class="ti ti-clock-hour-4" aria-hidden="true"></i>${fmt12(cls.start)} – ${fmt12(cls.end)}</span>
+          <span class="meta-item"><i class="ti ti-map-pin" aria-hidden="true"></i>Room ${cls.room}</span>
+        </div>
+        ${isToday && status!=="done" ? `
+          <div class="progress-bar" role="progressbar" aria-valuenow="${prog}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill ${fillClass}" style="width:${prog}%"></div>
+          </div>
+          <div class="time-left">${tl}</div>` : isToday ? `<div class="time-left" style="margin-top:8px; opacity: 0.8">${tl}</div>` : ""}
+      </article>`;
+  }
+
+  if(isToday) {
+    if(ongoing.length) {
+      html += `<div class="section-title">Happening Now</div>`;
+      ongoing.forEach(c => html += cardHtml(c));
+    }
+    if(upcoming.length) {
+      html += `<div class="section-title">Coming Up Next</div>`;
+      upcoming.forEach(c => html += cardHtml(c));
+    }
+    if(done.length) {
+      html += `<div class="section-title">Completed Today</div>`;
+      done.forEach(c => html += cardHtml(c));
+    }
+  } else {
+    html += `<div class="section-title">Schedule for ${fullDayNames[selectedDay]}</div>`;
+    all.forEach(c => html += cardHtml(c, "upcoming"));
+  }
+
+  listEl.innerHTML = html;
+}
+
+window.selectDay = function(d) { selectedDay = d; render(); };
+
+// --- Initialization ---
+render();
+setInterval(render, 1000);
+
+// --- PWA Service Worker Registration ---
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW Registered', reg))
+      .catch(err => console.error('SW Registration failed', err));
+  });
+}
+</script>
+
+</body>
+</html>
