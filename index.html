@@ -108,6 +108,198 @@
         .clock { font-size: 14px; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
         h2 { font-size: 24px; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.02em; }
         
+        /* New Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-border-primary);
+            background: var(--color-background-primary);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: var(--font-sans);
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .btn-primary {
+            background: var(--color-text-primary);
+            color: white;
+            border-color: var(--color-text-primary);
+        }
+        .btn-primary:hover {
+            background: #27272a;
+        }
+        .btn-danger {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+        .btn-danger:hover {
+            background: #fecaca;
+        }
+        .btn-secondary {
+            background: var(--color-background-secondary);
+            color: var(--color-text-primary);
+            border-color: var(--color-border-secondary);
+        }
+        .btn-secondary:hover {
+            background: var(--color-background-tertiary);
+        }
+        .btn-manage {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-border-primary);
+            background: var(--color-background-primary);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: var(--font-sans);
+        }
+        .btn-manage:active {
+            transform: scale(0.95);
+        }
+        
+        /* New Form Styles */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-text-tertiary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-border-primary);
+            background: var(--color-background-primary);
+            color: var(--color-text-primary);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-text-primary);
+        }
+        
+        /* Day Selector Group */
+        .day-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .day-checkbox-label {
+            flex: 1;
+            min-width: 45px;
+            text-align: center;
+        }
+        .day-checkbox-label input {
+            display: none;
+        }
+        .day-checkbox-label span {
+            display: block;
+            padding: 8px 0;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-border-secondary);
+            background: var(--color-background-primary);
+            color: var(--color-text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .day-checkbox-label input:checked + span {
+            background: var(--color-text-primary);
+            color: white;
+            border-color: var(--color-text-primary);
+            font-weight: 500;
+        }
+        
+        /* Type Selector Segmented Control */
+        .type-selector {
+            display: flex;
+            gap: 8px;
+        }
+        .type-radio-label {
+            flex: 1;
+        }
+        .type-radio-label input {
+            display: none;
+        }
+        .type-radio-label span {
+            display: block;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-border-secondary);
+            background: var(--color-background-primary);
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .type-radio-label.lecture input:checked + span {
+            border-color: #378ADD;
+            color: #185FA5;
+            background: #E6F1FB;
+            font-weight: 600;
+        }
+        .type-radio-label.lab input:checked + span {
+            border-color: #BA7517;
+            color: #854F0B;
+            background: #FAEEDA;
+            font-weight: 600;
+        }
+
+        /* Manage List Styles */
+        .manage-list-item {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-tertiary);
+            border-radius: var(--border-radius-lg);
+            padding: 1.25rem;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .manage-list-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+        .manage-list-item-details {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .manage-list-item-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            border-top: 1px solid var(--color-border-secondary);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
     </style>
 </head>
@@ -115,25 +307,154 @@
 
 <div class="app">
   <h1 class="sr-only">Class Schedule</h1>
-  <div class="header">
-    <h2 id="day-title">Today's Classes</h2>
-    <div class="clock" id="live-clock">--:--:--</div>
-    <div class="date-badge" id="date-badge"></div>
+  
+  <!-- Main View -->
+  <div id="main-view">
+    <div class="header">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <h2 id="day-title">Today's Classes</h2>
+          <div class="clock" id="live-clock">--:--:--</div>
+        </div>
+        <button class="btn-manage" onclick="toggleView('manage')">
+          <i class="ti ti-settings"></i> Manage
+        </button>
+      </div>
+      <div class="date-badge" id="date-badge"></div>
+    </div>
+    <nav class="day-tabs" id="day-tabs" aria-label="Day selection"></nav>
+    <main id="schedule-list"></main>
   </div>
-  <nav class="day-tabs" id="day-tabs" aria-label="Day selection"></nav>
-  <main id="schedule-list"></main>
+
+  <!-- Manage View -->
+  <div id="manage-view" style="display: none;">
+    <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h2>Manage</h2>
+      <button class="btn-manage" onclick="toggleView('main')">
+        <i class="ti ti-arrow-left"></i> Back
+      </button>
+    </div>
+    
+    <!-- State 1: List of Classes -->
+    <div id="manage-list-state">
+      <div style="display: flex; gap: 10px; margin-bottom: 1.5rem;">
+        <button class="btn btn-primary" style="flex: 1;" onclick="openAddClassForm()">
+          <i class="ti ti-plus"></i> Add New Class
+        </button>
+        <button class="btn btn-danger" onclick="clearSchedule()">
+          <i class="ti ti-trash"></i> Clear All
+        </button>
+      </div>
+      <div id="manage-classes-list"></div>
+    </div>
+    
+    <!-- State 2: Add/Edit Class Form -->
+    <div id="manage-form-state" style="display: none;">
+      <h3 id="form-title" style="font-size: 16px; font-weight: 600; margin-bottom: 1.25rem;">Add New Class</h3>
+      <form id="class-form" onsubmit="saveClassForm(event)">
+        <input type="hidden" id="form-class-id">
+        
+        <div class="form-group">
+          <label class="form-label" for="form-name">Class / Subject Name</label>
+          <input type="text" id="form-name" class="form-control" placeholder="e.g. General Chemistry" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <div class="type-selector">
+            <label class="type-radio-label lecture">
+              <input type="radio" name="form-type" value="lecture" checked>
+              <span>Lecture</span>
+            </label>
+            <label class="type-radio-label lab">
+              <input type="radio" name="form-type" value="lab">
+              <span>Lab</span>
+            </label>
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 12px;" class="form-group">
+          <div style="flex: 1;">
+            <label class="form-label" for="form-start">Start Time</label>
+            <input type="time" id="form-start" class="form-control" required>
+          </div>
+          <div style="flex: 1;">
+            <label class="form-label" for="form-end">End Time</label>
+            <input type="time" id="form-end" class="form-control" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="form-room">Room / Location</label>
+          <input type="text" id="form-room" class="form-control" placeholder="e.g. 205" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Days</label>
+          <div class="day-selector">
+            <label class="day-checkbox-label">
+              <input type="checkbox" name="form-days" value="Sun">
+              <span>Sun</span>
+            </label>
+            <label class="day-checkbox-label">
+              <input type="checkbox" name="form-days" value="Mon">
+              <span>Mon</span>
+            </label>
+            <label class="day-checkbox-label">
+              <input type="checkbox" name="form-days" value="Tue">
+              <span>Tue</span>
+            </label>
+            <label class="day-checkbox-label">
+              <input type="checkbox" name="form-days" value="Wed">
+              <span>Wed</span>
+            </label>
+            <label class="day-checkbox-label">
+              <input type="checkbox" name="form-days" value="Thu">
+              <span>Thu</span>
+            </label>
+            <label class="day-checkbox-label">
+              <input type="checkbox" name="form-days" value="Fri">
+              <span>Fri</span>
+            </label>
+            <label class="day-checkbox-label">
+              <input type="checkbox" name="form-days" value="Sat">
+              <span>Sat</span>
+            </label>
+          </div>
+          <div id="days-error" style="color: #dc2626; font-size: 12px; margin-top: 4px; display: none;">Please select at least one day.</div>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 2rem;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeClassForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Save Class</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script>
 // --- Schedule Data ---
-const schedule = [
-  { id:1, name:"Fundamentals of Computing", type:"lecture", days:["Sun","Mon"], start:"10:30", end:"12:00", room:"307" },
-  { id:2, name:"General Chemistry", type:"lecture", days:["Sun","Mon"], start:"09:00", end:"10:30", room:"205" },
-  { id:3, name:"Math-1 Calculus", type:"lecture", days:["Sun","Mon"], start:"12:00", end:"13:30", room:"306" },
-  { id:4, name:"Fundamentals of Computer Lab", type:"lab", days:["Sun"], start:"13:30", end:"15:30", room:"204" },
-  { id:5, name:"General Chemistry Lab", type:"lab", days:["Thu"], start:"11:00", end:"13:00", room:"117" },
-  { id:6, name:"Elementary English", type:"lecture", days:["Thu"], start:"09:00", end:"11:00", room:"LB 218" },
-];
+let schedule = [];
+
+function loadSchedule() {
+  const stored = localStorage.getItem('class_schedule');
+  if (stored) {
+    try {
+      schedule = JSON.parse(stored);
+    } catch(e) {
+      console.error("Failed to parse stored schedule", e);
+      schedule = [];
+    }
+  } else {
+    schedule = [];
+    saveSchedule();
+  }
+}
+
+function saveSchedule() {
+  localStorage.setItem('class_schedule', JSON.stringify(schedule));
+}
 
 const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const fullDayNames = { Sun:"Sunday", Mon:"Monday", Tue:"Tuesday", Wed:"Wednesday", Thu:"Thursday", Fri:"Friday", Sat:"Saturday" };
@@ -197,7 +518,27 @@ function render() {
   document.getElementById("date-badge").textContent =
     now.toLocaleDateString("en-US", {weekday:"long", year:"numeric", month:"long", day:"numeric"});
 
+  const listEl = document.getElementById("schedule-list");
+
+  if (schedule.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-state">
+        <i class="ti ti-calendar-plus" style="font-size:48px;display:block;margin-bottom:12px;opacity:0.2" aria-hidden="true"></i>
+        Your schedule is empty. <br/>
+        <button class="btn btn-primary" style="margin-top: 16px;" onclick="toggleView('manage'); openAddClassForm();">
+          <i class="ti ti-plus"></i> Add a Class
+        </button>
+      </div>`;
+    document.getElementById("day-tabs").innerHTML = "";
+    return;
+  }
+
   const activeDays = [...new Set(schedule.flatMap(c=>c.days))].sort((a,b)=>dayNames.indexOf(a)-dayNames.indexOf(b));
+
+  // If the previously selected day doesn't exist anymore, fall back to today or first active day
+  if (!activeDays.includes(selectedDay)) {
+    selectedDay = activeDays.includes(dayAbbr) ? dayAbbr : (activeDays[0] || dayAbbr);
+  }
 
   const tabsEl = document.getElementById("day-tabs");
   tabsEl.innerHTML = activeDays.map(d => `
@@ -208,7 +549,6 @@ function render() {
 
   const nowMins = h*60+mi;
   const classes = schedule.filter(c=>c.days.includes(selectedDay));
-  const listEl = document.getElementById("schedule-list");
 
   if(classes.length === 0) {
     listEl.innerHTML = `<div class="empty-state"><i class="ti ti-calendar-off" style="font-size:48px;display:block;margin-bottom:12px;opacity:0.2" aria-hidden="true"></i>No classes scheduled for ${fullDayNames[selectedDay]}</div>`;
@@ -276,7 +616,185 @@ function render() {
 
 window.selectDay = function(d) { selectedDay = d; render(); };
 
+// --- View Toggling and Schedule Editing Logic ---
+window.toggleView = function(view) {
+  const mainView = document.getElementById("main-view");
+  const manageView = document.getElementById("manage-view");
+  if (view === "manage") {
+    mainView.style.display = "none";
+    manageView.style.display = "block";
+    renderManageList();
+  } else {
+    mainView.style.display = "block";
+    manageView.style.display = "none";
+    closeClassForm();
+    render();
+  }
+};
+
+function renderManageList() {
+  const listEl = document.getElementById("manage-classes-list");
+  if (schedule.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-state">
+        <i class="ti ti-calendar-off" style="font-size:48px;display:block;margin-bottom:12px;opacity:0.2" aria-hidden="true"></i>
+        Your schedule is empty.
+      </div>`;
+    return;
+  }
+  
+  // Sort classes by day order, then start time
+  const sorted = [...schedule].sort((a, b) => {
+    const dayDiff = dayNames.indexOf(a.days[0]) - dayNames.indexOf(b.days[0]);
+    if (dayDiff !== 0) return dayDiff;
+    return toMins(a.start) - toMins(b.start);
+  });
+  
+  listEl.innerHTML = sorted.map(cls => {
+    const daysStr = cls.days.map(d => fullDayNames[d]).join(", ");
+    const isLab = cls.type === "lab";
+    const typeBadgeClass = isLab ? "badge-lab" : "badge-upcoming";
+    
+    return `
+      <div class="manage-list-item">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+          <div class="manage-list-item-title">${cls.name}</div>
+          <span class="status-badge ${typeBadgeClass}">${isLab ? "Lab" : "Lecture"}</span>
+        </div>
+        <div class="manage-list-item-details">
+          <span class="meta-item"><i class="ti ti-clock-hour-4" aria-hidden="true"></i>${fmt12(cls.start)} – ${fmt12(cls.end)}</span>
+          <span class="meta-item"><i class="ti ti-map-pin" aria-hidden="true"></i>Room ${cls.room}</span>
+          <span class="meta-item"><i class="ti ti-calendar" aria-hidden="true"></i>${daysStr}</span>
+        </div>
+        <div class="manage-list-item-actions">
+          <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" onclick="openEditClassForm(${cls.id})">
+            <i class="ti ti-edit"></i> Edit
+          </button>
+          <button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" onclick="deleteClass(${cls.id})">
+            <i class="ti ti-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+window.openAddClassForm = function() {
+  document.getElementById("form-title").textContent = "Add New Class";
+  document.getElementById("form-class-id").value = "";
+  document.getElementById("form-name").value = "";
+  document.getElementById("form-room").value = "";
+  document.getElementById("form-start").value = "09:00";
+  document.getElementById("form-end").value = "10:30";
+  
+  const defaultType = document.querySelector('input[name="form-type"][value="lecture"]');
+  if (defaultType) defaultType.checked = true;
+  
+  document.querySelectorAll('input[name="form-days"]').forEach(el => {
+    el.checked = false;
+  });
+  
+  document.getElementById("days-error").style.display = "none";
+  document.getElementById("manage-list-state").style.display = "none";
+  document.getElementById("manage-form-state").style.display = "block";
+};
+
+window.openEditClassForm = function(id) {
+  const cls = schedule.find(c => c.id === id);
+  if (!cls) return;
+  
+  document.getElementById("form-title").textContent = "Edit Class";
+  document.getElementById("form-class-id").value = cls.id;
+  document.getElementById("form-name").value = cls.name;
+  document.getElementById("form-room").value = cls.room;
+  document.getElementById("form-start").value = cls.start;
+  document.getElementById("form-end").value = cls.end;
+  
+  const typeRadio = document.querySelector(`input[name="form-type"][value="${cls.type}"]`);
+  if (typeRadio) typeRadio.checked = true;
+  
+  document.querySelectorAll('input[name="form-days"]').forEach(el => {
+    el.checked = cls.days.includes(el.value);
+  });
+  
+  document.getElementById("days-error").style.display = "none";
+  document.getElementById("manage-list-state").style.display = "none";
+  document.getElementById("manage-form-state").style.display = "block";
+};
+
+window.closeClassForm = function() {
+  document.getElementById("manage-list-state").style.display = "block";
+  document.getElementById("manage-form-state").style.display = "none";
+};
+
+window.saveClassForm = function(event) {
+  event.preventDefault();
+  
+  const idEl = document.getElementById("form-class-id");
+  const nameEl = document.getElementById("form-name");
+  const roomEl = document.getElementById("form-room");
+  const startEl = document.getElementById("form-start");
+  const endEl = document.getElementById("form-end");
+  
+  const typeEl = document.querySelector('input[name="form-type"]:checked');
+  const checkedDays = Array.from(document.querySelectorAll('input[name="form-days"]:checked')).map(el => el.value);
+  
+  const errorEl = document.getElementById("days-error");
+  if (checkedDays.length === 0) {
+    errorEl.style.display = "block";
+    return;
+  } else {
+    errorEl.style.display = "none";
+  }
+  
+  if (toMins(startEl.value) >= toMins(endEl.value)) {
+    alert("End time must be after start time.");
+    return;
+  }
+  
+  const classId = idEl.value;
+  const classData = {
+    id: classId ? parseInt(classId, 10) : Date.now(),
+    name: nameEl.value.trim(),
+    type: typeEl.value,
+    days: checkedDays,
+    start: startEl.value,
+    end: endEl.value,
+    room: roomEl.value.trim()
+  };
+  
+  if (classId) {
+    const idx = schedule.findIndex(c => c.id === parseInt(classId, 10));
+    if (idx !== -1) {
+      schedule[idx] = classData;
+    }
+  } else {
+    schedule.push(classData);
+  }
+  
+  saveSchedule();
+  closeClassForm();
+  renderManageList();
+};
+
+window.deleteClass = function(id) {
+  if (confirm("Are you sure you want to delete this class?")) {
+    schedule = schedule.filter(c => c.id !== id);
+    saveSchedule();
+    renderManageList();
+  }
+};
+
+window.clearSchedule = function() {
+  if (confirm("Are you sure you want to clear all classes from your schedule? This cannot be undone.")) {
+    schedule = [];
+    saveSchedule();
+    renderManageList();
+  }
+};
+
 // --- Initialization ---
+loadSchedule();
 render();
 setInterval(render, 1000);
 
